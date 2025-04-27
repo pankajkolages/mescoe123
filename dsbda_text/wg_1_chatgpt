@@ -1,0 +1,50 @@
+import pandas as pd 
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+
+url = "https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv"
+df = pd.read_csv(url)
+
+df.head()
+
+df.info()
+
+df.describe(include='all')
+
+df.shape
+
+df.isnull().sum()
+
+print(df.dtypes) 
+df['Pclass'] = df['Pclass'].astype('category')
+df['Survived'] = df['Survived'].astype('category')
+df['Sex'] = df['Sex'].astype('category')
+df['Embarked'] = df['Embarked'].astype('category')
+print(df.dtypes)
+
+# Convert 'Pclass' into category
+df['Pclass'] = df['Pclass'].astype('category')
+
+# Convert 'Survived' into category
+df['Survived'] = df['Survived'].astype('category')
+
+# Convert 'Sex', 'Embarked' into category
+df['Sex'] = df['Sex'].astype('category')
+df['Embarked'] = df['Embarked'].astype('category')
+
+# Check again
+print("\nData Types after Conversion:")
+print(df.dtypes)
+
+# Convert categorical to numerical using label encoding
+df_encoded = df.copy()
+
+# Label encode 'Sex' and 'Embarked'
+df_encoded['Sex'] = df_encoded['Sex'].cat.codes
+df_encoded['Embarked'] = df_encoded['Embarked'].cat.codes
+df_encoded['Pclass'] = df_encoded['Pclass'].cat.codes
+df_encoded['Survived'] = df_encoded['Survived'].cat.codes
+
+# Display the first few rows
+df_encoded.head()
