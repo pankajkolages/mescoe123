@@ -1,0 +1,44 @@
+# Import necessary libraries
+import pandas as pd
+
+# Load the dataset
+df = pd.read_csv('/mnt/data/Academic_performance.csv')
+
+# Display first few rows to understand
+print(df.head())
+
+# Group by Gender and calculate summary statistics for Marks
+grouped_stats = df.groupby('Gender')['Marks'].agg(['mean', 'median', 'min', 'max', 'std'])
+
+print("\nSummary Statistics of Marks Grouped by Gender:")
+print(grouped_stats)
+
+
+# Create a dictionary where each Gender is mapped to list of Marks
+marks_list_by_gender = df.groupby('Gender')['Marks'].apply(list).to_dict()
+
+print("\nList of Marks for each Gender:")
+print(marks_list_by_gender)
+
+
+# Load Iris dataset
+from sklearn.datasets import load_iris
+import pandas as pd
+
+# Load the dataset
+iris = load_iris()
+
+# Create a DataFrame
+iris_df = pd.DataFrame(data=iris.data, columns=iris.feature_names)
+iris_df['species'] = pd.Categorical.from_codes(iris.target, iris.target_names)
+
+print("\nFirst 5 rows of Iris dataset:")
+print(iris_df.head())
+
+# Filter by species
+species_list = ['setosa', 'versicolor', 'virginica']
+
+for species in species_list:
+    print(f"\nSummary Statistics for {species.capitalize()}:")
+    species_df = iris_df[iris_df['species'] == species]
+    print(species_df.describe())
