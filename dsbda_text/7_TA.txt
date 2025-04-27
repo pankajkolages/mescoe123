@@ -1,4 +1,16 @@
+#nltk = for Natural Language Processing tasks.
 
+#word_tokenize = to split text into words (tokens).
+
+#stopwords = to remove common meaningless words like "the", "is", "and", etc.
+
+#PorterStemmer = for stemming (cutting words to their root form).
+
+#WordNetLemmatizer = for lemmatization (better root form, based on dictionary meaning).
+
+#CountVectorizer = to convert text into term frequency matrices.
+
+#TfidfVectorizer = to convert text into TF-IDF matrices.
 import pandas as pd
 import nltk
 from nltk.tokenize import word_tokenize
