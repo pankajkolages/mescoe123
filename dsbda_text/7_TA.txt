@@ -1,0 +1,86 @@
+
+import pandas as pd
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer, WordNetLemmatizer
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+import nltk
+nltk.download('stopwords')
+import nltk
+nltk.download('wordnet')
+
+
+nltk.download('punkt_tab')
+nltk.download('averaged_perceptron_tagger_eng')
+
+nltk.download('stopwords')
+nltk.download('wordnet')
+
+# Sample Document
+text = "The quick brown fox jumps over the lazy dog."
+
+# Step 1: Tokenization
+tokens = word_tokenize(text)
+print("\nTokens:")
+print(tokens)
+
+# Step 2: POS Tagging
+pos_tags = nltk.pos_tag(tokens)
+print("\nPOS Tags:")
+print(pos_tags)
+
+# Step 3: Stop Words Removal
+stop_words = set(stopwords.words('english'))
+filtered_tokens = [word for word in tokens if word.lower() not in stop_words]
+print("\nTokens after Stop Words Removal:")
+print(filtered_tokens)
+
+# Step 4: Stemming
+stemmer = PorterStemmer()
+stemmed_tokens = [stemmer.stem(word) for word in filtered_tokens]
+print("\nTokens after Stemming:")
+print(stemmed_tokens)
+
+# Step 5: Lemmatization
+lemmatizer = WordNetLemmatizer()
+lemmatized_tokens = [lemmatizer.lemmatize(word) for word in filtered_tokens]
+print("\nTokens after Lemmatization:")
+print(lemmatized_tokens)
+
+# Step 6: Term Frequency and IDF
+# Using two small documents for better demonstration
+
+documents = [
+    "The quick brown fox jumps over the lazy dog.",
+    "Never jump over the lazy dog quickly."
+]
+
+# Term Frequency (TF)
+vectorizer = CountVectorizer(stop_words='english')
+tf_matrix = vectorizer.fit_transform(documents)
+
+print("\nTerm Frequency (TF) Matrix:")
+print(vectorizer.get_feature_names_out())
+print(tf_matrix.toarray())
+
+# Inverse Document Frequency (IDF) / TF-IDF
+tfidf_vectorizer = TfidfVectorizer(stop_words='english')
+tfidf_matrix = tfidf_vectorizer.fit_transform(documents)
+
+# print("\nTF-IDF Matrix:")
+# print(tfidf_vectorizer.get_feature_names_out())
+# print(tfidf_matrix.toarray())
+
+# Print feature names
+print("\nFeatures/Words:")
+print(tfidf_vectorizer.get_feature_names_out())
+
+
+# Print TF-IDF matrix in a clean tabular way
+import pandas as pd
+
+df = pd.DataFrame(tfidf_matrix.toarray(), columns=tfidf_vectorizer.get_feature_names_out())
+print("\nTF-IDF Matrix (Proper Table):")
+print(df)
+
